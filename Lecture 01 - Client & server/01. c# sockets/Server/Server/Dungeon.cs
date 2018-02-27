@@ -1,4 +1,5 @@
-﻿using System;
+﻿//based on the work of https://github.com/Phil-Sparkes/comp260-server-1617/blob/master/MUD2/Server/Server/Dungeon.cs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Server
 {
     public class Dungeon
     {
-        Dictionary<String, Room> roomMap;
+        public Dictionary<String, Room> roomMap;
 
         Room currentRoom;
 
@@ -16,80 +17,94 @@ namespace Server
         {
             roomMap = new Dictionary<string, Room>();
             {
-                var room = new Room("Room 0", "You are standing in the entrance hall\nAll adventures start here");
-                room.north = "Room 1";
+                var room = new Room("Forested Area", "You awake in a forested area, you don't know how you got there... ");
+                room.north = "Well Clearing";
                 roomMap.Add(room.name, room);
             }
 
             {
-                var room = new Room("Room 1", "You are in room 1");
-                room.south = "Room 0";
-                room.west = "Room 3";
-                room.east = "Room 2";
+                var room = new Room("Well Clearing", "You arrive in a clearing with a well in the middle, you can hear a faint whispering... ");
+                room.south = "Forested Area";
+                room.west = "Cow Field";
+                room.east = "Old House";
                 roomMap.Add(room.name, room);
             }
 
             {
-                var room = new Room("Room 2", "You are in room 2");
-                room.north = "Room 4";
+                var room = new Room("Old House", " You come across a strange old house with a thatch roof, the whispering has turned into a loud mumbleing... ");
+                room.north = "Back Garden";
                 roomMap.Add(room.name, room);
             }
 
             {
-                var room = new Room("Room 3", "You are in room 3");
-                room.east = "Room 1";
+                var room = new Room("Cow Field", "You've just stumbled into a shit covered cow field and fallen on your face. !!!You died of dysentery!!!");
                 roomMap.Add(room.name, room);
             }
 
             {
-                var room = new Room("Room 4", "You are in room 4");
-                room.south = "Room 2";
-                room.west = "Room 5";
+                var room = new Room("Back Garden", "Your round the back of the old house the mumbling has turned into a cry coming from the spider covered shed to the west... ");
+                room.south = "Old House";
+                room.west = "Ye Olde Lavatory";
                 roomMap.Add(room.name, room);
             }
 
             {
-                var room = new Room("Room 5", "You are in room 5");
-                room.south = "Room 1";
-                room.east = "Room 4";
+                var room = new Room("Ye Olde Lavatory", "You burst open the door it's an old toilet, a ghost comes up behind you and pushed you in. !!!You died of dysentery!!! ");
                 roomMap.Add(room.name, room);
             }
 
-            currentRoom = roomMap["Room 0"];
+            currentRoom = roomMap["Forrested Area"];
         }
 
-        public string Process(string Key)
+
+        public String GiveInfo(Player player)
         {
-            String returnString = "";
-            var input = Key.Split(' ');
+            currentRoom = player.currentRoom;
+            String info = "";
+            info += currentRoom.desc;
 
-            /* returnString +=(currentRoom.desc);
-               returnString("Exits");
-               for (var i = 0; i < currentRoom.exits.Length; i++)
-               {
-                   if (currentRoom.exits[i] != null)
-                   {
-                       Console.Write(Room.exitNames[i] + " ");
-                   }
-               }*/
+            for (var i = 0; i < currentRoom.exits.Length; i++)
+            {
+                if (currentRoom.exits[i] != null)
+                {
+                    info += ( Room.exitNames[i] + " There is a way through  ");
+                }
+            }
 
-            returnString += ("\n> ");
+            info += "\nPlayers in room: ";
 
-            //var key = Console.ReadLine();
+            foreach (Player otherPlayer in program.PlayerList)
+            {
+                if (player.currentRoom == otherPlayer.currentRoom)
+                {
+                    info += "[";
+                    info += otherPlayer.playerName;
+                    info += "]";
+                }
+            }
+            info += "\n";
+            return info;
+        }
 
-            //var input = key.Split(' ');
+        public string Process(string Key,Player player)
+        {
+            currentRoom = player.currentRoom;
+             String returnString = ""; GiveInfo(player);
+             var input = Key.Split(' ');
 
             switch (input[0].ToLower())
             {
                 case "help":
-                    Console.Clear();
-                    returnString += ("\nCommands are ....");
-                    returnString += ("\nhelp - for this screen");
-                    returnString += ("\nlook - to look around");
-                    returnString += ("\ngo [north | south | east | west]  - to travel between locations");
-                    returnString += ("\nPress any key to continue");
-                    Console.ReadKey(true);
-                    break;
+                    returnString += "\nCommands are ....\n";
+                    returnString += "help - for this screen\n";
+                    returnString += "look - to look around\n";
+                    returnString += "go [north | south | east | west]  - to travel between locations\n";
+                    returnString += "say - local chat\n";
+                    returnString += "\nPress any key to continue\n";
+                    //Console.ReadKey(true);
+                    //break;
+
+                    return returnString;
 
                 case "look":
                     //loop straight back
@@ -107,8 +122,10 @@ namespace Server
                     return returnString;
 
 
+
                 case "say":
-                    returnString += ("You say ");
+                    returnString += (player.playerName);
+                    returnString += ("] ");
                     for (var i = 1; i < input.Length; i++)
                     {
                         returnString += (input[i] + " ");
@@ -128,31 +145,43 @@ namespace Server
                     return returnString;
 
                 case "go":
-                    if ((input[1].ToLower() == "north") && (currentRoom.north != null))
+                    String direction = "";
+
+                    if (input.Length > 1)
                     {
-                        currentRoom = roomMap[currentRoom.north];
+                        direction = input[1].ToLower();
+                    }
+
+                    if ((direction == "north") && (currentRoom.north != null))
+                    {
+                        player.currentRoom = roomMap[currentRoom.north];
+                        returnString += GiveInfo(player);
                     }
                     else
                     {
-                        if ((input[1].ToLower() == "south") && (currentRoom.south != null))
+                        if ((direction == "south") && (currentRoom.south != null))
                         {
-                            currentRoom = roomMap[currentRoom.south];
+                            player.currentRoom = roomMap[currentRoom.south];
+                            returnString += GiveInfo(player);
                         }
                         else
                         {
-                            if ((input[1].ToLower() == "east") && (currentRoom.east != null))
+                            if ((direction == "east") && (currentRoom.east != null))
                             {
-                                currentRoom = roomMap[currentRoom.east];
+                                player.currentRoom = roomMap[currentRoom.east];
+                                returnString += GiveInfo(player);
                             }
                             else
                             {
-                                if ((input[1].ToLower() == "west") && (currentRoom.west != null))
+                                if ((direction == "west") && (currentRoom.west != null))
                                 {
-                                    currentRoom = roomMap[currentRoom.west];
+                                    player.currentRoom = roomMap[currentRoom.west];
+                                    returnString += GiveInfo(player);
                                 }
                                 else
                                 {
                                     //handle error
+                                    returnString += GiveInfo(player);
                                     returnString += ("\nERROR");
                                     returnString += ("\nCan not go " + input[1] + " from here");
                                     returnString += ("\nPress any key to continue");
@@ -160,17 +189,8 @@ namespace Server
                                 }
                             }
                         }
-                        //return returnString;
                     }
-                    returnString += ("\n" + currentRoom.desc);
-                    returnString += ("\nExits");
-                    for (var i = 0; i < currentRoom.exits.Length; i++)
-                    {
-                        if (currentRoom.exits[i] != null)
-                        {
-                            returnString += (" " + Room.exitNames[i]);
-                        }
-                    }
+
                     return returnString;
 
                 default:
@@ -182,7 +202,6 @@ namespace Server
                     return returnString;
             }
 
-            return returnString;
         }
     }
 }

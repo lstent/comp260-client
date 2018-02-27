@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Based on the work of https://github.com/Phil-Sparkes/comp260-server-1617/blob/master/MUD2/Server/Server/server.cs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,158 +10,242 @@ using System.Threading;
 
 namespace Server
 {
-    class server
+
+
+    class program
     {
-        class program
+        static Dungeon dungeon = new Dungeon();
+        static Dictionary<String, Socket> clientDictionary = new Dictionary<String, Socket>();
+        //static int clientID = 1;
+        static bool quit = false;
+        public static List<Player> PlayerList = new List<Player>();
+        static LinkedList<String> incommingMessages = new LinkedList<string>();
+        static LinkedList<String> outgoingMessages = new LinkedList<string>();
+
+        class ReceiveThreadLaunchInfo
         {
-            static Dictionary<String, Socket> clientDictionary = new Dictionary<String, Socket>();
-            static int clientID = 1;
-            static bool quit = false;
-            static LinkedList<String> incommingMessages = new LinkedList<string>();
-
-            class ReceiveThreadLaunchInfo
+            public ReceiveThreadLaunchInfo(int ID, Socket socket)
             {
-                public ReceiveThreadLaunchInfo(int ID, Socket socket)
-                {
-                    this.ID = ID;
-                    this.socket = socket;
-                }
-
-                public int ID;
-                public Socket socket;
+                this.ID = ID;
+                this.socket = socket;
             }
 
-            static void acceptClientThread(Object obj)
+            public int ID;
+            public Socket socket;
+        }
+
+        static void acceptClientThread(Object obj)
+        {
+            Socket s = obj as Socket;
+
+            int ID = 1;
+
+            while (quit == false)
             {
-                Socket s = obj as Socket;
 
-                int ID = 0;
+                var newClientSocket = s.Accept();
 
-                while (quit == false)
+                var myThread = new Thread(clientReceiveThread);
+                myThread.Start(new ReceiveThreadLaunchInfo(ID, newClientSocket));
+
+                lock (clientDictionary)
                 {
-                    
-                    var newClientSocket = s.Accept();
                     String clientName = "client" + ID;
-                    Socket serverClient = s.Accept();
+                    clientDictionary.Add(clientName, newClientSocket);
+                    var player = new Player
+                    {
+                        dungeonRef = dungeon,
+                        playerName = "Player" + ID,
+                        clientName = clientName
+                    };
 
-                    var myThread = new Thread(clientReceiveThread);
-                    myThread.Start(new ReceiveThreadLaunchInfo(ID, newClientSocket));
-                    clientDictionary.Add(clientName, serverClient);
-                    
-                    ID++;
+                    player.Init();
+                    PlayerList.Add(player);
+
+
+                    var dungeonResult = dungeon.GiveInfo(player);
+
+                    lock (outgoingMessages)
+                    {
+                        outgoingMessages.AddLast(clientName + ":" + dungeonResult);
+                    }
+                }
+                ID++;
+            }
+        }
+
+        static Socket GetSocketFromName(String name)
+        {
+            lock (clientDictionary)
+            {
+                return clientDictionary[name];
+            }
+        }
+
+        static String GetNameFromSocket(Socket s)
+        {
+            lock (clientDictionary)
+            {
+                foreach (KeyValuePair<String, Socket> o in clientDictionary)
+                {
+                    if (o.Value == s)
+                    {
+                        return o.Key;
+                    }
                 }
             }
+            return null;
+        }
 
-            static void clientReceiveThread(Object obj)
+        static void localChatMessage(string message, Player player)
+        {
+            foreach (Player otherPlayer in PlayerList)
             {
-                ReceiveThreadLaunchInfo receiveInfo = obj as ReceiveThreadLaunchInfo;
-                bool socketLost = false;
-
-                while ((quit == false) && (socketLost == false))
+                if (player.currentRoom == otherPlayer.currentRoom)
                 {
-                    byte[] buffer = new byte[4094];
+                    lock (outgoingMessages)
+                    {
+                        outgoingMessages.AddLast(otherPlayer.clientName + ":" + message);
+                    }
+                }
 
+            }
+
+        }
+
+        static void clientReceiveThread(Object obj)
+        {
+            ReceiveThreadLaunchInfo receiveInfo = obj as ReceiveThreadLaunchInfo;
+            bool socketLost = false;
+
+            while ((quit == false) && (socketLost == false))
+            {
+                byte[] buffer = new byte[4094];
+
+                try
+                {
+                    int result = receiveInfo.socket.Receive(buffer);
+
+                    if (result > 0)
+                    {
+                        ASCIIEncoding encoder = new ASCIIEncoding();
+
+                        lock (incommingMessages)
+                        {
+                            incommingMessages.AddLast(receiveInfo.ID + ":" + encoder.GetString(buffer, 0, result));
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    socketLost = true;
+                }
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            ASCIIEncoding encoder = new ASCIIEncoding();
+
+            dungeon.Init();
+
+            Socket serverClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            IPEndPoint ipLocal = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8221);
+
+            serverClient.Bind(ipLocal);
+            serverClient.Listen(4);
+
+            Console.WriteLine("Waiting for client ...");
+
+            var myThread = new Thread(acceptClientThread);
+            myThread.Start(serverClient);
+
+            byte[] buffer = new byte[4096];
+            while (true)
+            {
+                String messageToSend = "";
+                lock (outgoingMessages)
+                {
+                    if (outgoingMessages.First != null)
+                    {
+                        messageToSend = outgoingMessages.First.Value;
+
+                        outgoingMessages.RemoveFirst();
+                    }
+                }
+                if (messageToSend != "")
+                {
                     try
                     {
-                        int result = receiveInfo.socket.Receive(buffer);
 
-                        if (result > 0)
+                        String[] substrings = messageToSend.Split(':');
+
+                        string theClient = substrings[0];
+                        string dungeonResult = substrings[1];
+
+                        byte[] sendBuffer = encoder.GetBytes(dungeonResult); // this is sending back to client
+                        int bytesSent = GetSocketFromName(theClient).Send(sendBuffer);
+
+                        bytesSent = GetSocketFromName(theClient).Send(sendBuffer); // DO NOT KNOW WHY I HAVE TO DO THIS TWICE BUT ONLY WAY IT WORKS
+                        Console.WriteLine("sending message to " + theClient);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+
+                String labelToPrint = "";
+                lock (incommingMessages)
+                {
+                    if (incommingMessages.First != null)
+                    {
+                        labelToPrint = incommingMessages.First.Value;
+
+                        incommingMessages.RemoveFirst();
+                    }
+                }
+
+                if (labelToPrint != "")
+                {
+
+                    String[] substrings = labelToPrint.Split(':');
+
+                    int PlayerID = Int32.Parse(substrings[0])-1;
+                    String UserCmd = substrings[1];
+
+                    var dungeonResult = dungeon.Process(UserCmd, PlayerList[PlayerID]);
+                    Player player = PlayerList[PlayerID];
+                    String theClient = "client" + substrings[0];
+
+
+                    if (dungeonResult.Length > 7)
+                    {
+                        if (dungeonResult.Substring(0, 7) == "[LOCAL]")
                         {
-                            ASCIIEncoding encoder = new ASCIIEncoding();
-
-                            lock (incommingMessages)
+                            localChatMessage(dungeonResult, player);
+                        }
+                        else
+                        {
+                            lock (outgoingMessages)
                             {
-                                incommingMessages.AddLast(receiveInfo.ID + ":" + encoder.GetString(buffer, 0, result));
+                                outgoingMessages.AddLast(theClient + ":" + dungeonResult);
                             }
                         }
                     }
-                    catch (System.Exception ex)
+                    else
                     {
-                        socketLost = true;
-                    }
-                }
-            }
-
-            static void Main(string[] args)
-            {
-                var dungeon = new Dungeon();
-
-                dungeon.Init();
-
-                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-                IPEndPoint ipLocal = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8221);
-
-                s.Bind(ipLocal);
-                s.Listen(4);
-
-                Console.WriteLine("Waiting for client ...");
-
-                Socket newConnection = s.Accept();
-
-                var myThread = new Thread(acceptClientThread);
-                myThread.Start(s);
-
-                int tick = 0;
-                int itemsProcessed = 0;
-                while (true)
-                {
-                    Console.WriteLine(clientDictionary);
-                    byte[] buffer = new byte[4096];
-                    try
-                    {
-                        int result = newConnection.Receive(buffer);
-                        if (result > 0)
+                        lock (outgoingMessages)
                         {
-                            //String recdMsg = encoder.GetString(buffer, 0, result);
-                            ASCIIEncoding encoder = new ASCIIEncoding();
-
-                            String msg = encoder.GetString(buffer, 0, result);
-                            Console.WriteLine("Received: " + msg);
-
-                            var dungeonResult = dungeon.Process(msg);
-                            Console.WriteLine(dungeonResult);
-
-                            //NetworkStream writer = new NetworkStream(newConnection.BeginSend)
-
-                            byte[] sendBuffer = encoder.GetBytes(dungeonResult);
-
-                            int bytesSent = newConnection.Send(sendBuffer);
-                            //newConnection.Send(sendBuffer);
+                            outgoingMessages.AddLast(theClient + ":" + dungeonResult);
                         }
                     }
-                    catch (System.Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-
-
-                    String labelToPrint = "";
-                    lock (incommingMessages)
-                    {
-                        if (incommingMessages.First != null)
-                        {
-                            labelToPrint = incommingMessages.First.Value;
-
-                            incommingMessages.RemoveFirst();
-
-                            itemsProcessed++;
-
-                        }
-                    }
-                        
-                    /*if (labelToPrint != "")
-                    {
-                        Console.WriteLine(tick + ":" + itemsProcessed + " " + labelToPrint);
-
-                        Console.WriteLine(incommingMessages);
-                    }*/
-                    tick++;
-
-                    Thread.Sleep(1);
                 }
+
+                Thread.Sleep(1);
             }
         }
     }
 }
-
