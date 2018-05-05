@@ -1,0 +1,16 @@
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\sqlite example.exe.config
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\sqlite example.exe
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\sqlite example.pdb
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\EntityFramework.dll
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\System.Data.SQLite.dll
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\EntityFramework.xml
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\System.Data.SQLite.xml
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\bin\Debug\System.Data.SQLite.dll.config
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\obj\Debug\sqlite example.csprojResolveAssemblyReference.cache
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\obj\Debug\sqlite example.csproj.CoreCompileInputs.cache
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\obj\Debug\sqlite example.exe
+C:\Users\Lucy-Poo\Downloads\Lecture 10\Lecture 10\code\sqlite example-2\windows\sqlite example\obj\Debug\sqlite example.pdb

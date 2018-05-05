@@ -1,0 +1,18 @@
+C:\Users\Lucy-Poo\Downloads\Lecture 01\01. c# sockets\Server\Server\bin\Debug\Server.exe
+C:\Users\Lucy-Poo\Downloads\Lecture 01\01. c# sockets\Server\Server\bin\Debug\Server.pdb
+C:\Users\Lucy-Poo\Downloads\Lecture 01\01. c# sockets\Server\Server\obj\x86\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Lucy-Poo\Downloads\Lecture 01\01. c# sockets\Server\Server\obj\x86\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\Lucy-Poo\Downloads\Lecture 01\01. c# sockets\Server\Server\obj\x86\Debug\Server.exe
+C:\Users\Lucy-Poo\Downloads\Lecture 01\01. c# sockets\Server\Server\obj\x86\Debug\Server.pdb
+G:\Year 2\Comp 260 - Distributed Systems\Lecture 01 - Client & server\01. c# sockets\Server\Server\bin\Debug\Server.exe
+G:\Year 2\Comp 260 - Distributed Systems\Lecture 01 - Client & server\01. c# sockets\Server\Server\bin\Debug\Server.pdb
+G:\Year 2\Comp 260 - Distributed Systems\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.csprojResolveAssemblyReference.cache
+G:\Year 2\Comp 260 - Distributed Systems\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.csproj.CoreCompileInputs.cache
+G:\Year 2\Comp 260 - Distributed Systems\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.exe
+G:\Year 2\Comp 260 - Distributed Systems\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.pdb
+G:\Year 2\Comp 260 - Distributed Systems\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.csprojResolveAssemblyReference.cache
+G:\Year 2\Comp 260 - Distributed Systems\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.csproj.CoreCompileInputs.cache
+G:\Year 2\Comp 260 - Distributed Systems\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.exe
+G:\Year 2\Comp 260 - Distributed Systems\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\Server\Server\obj\x86\Debug\Server.pdb
+G:\Year 2\Comp 260 - Distributed Systems\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\Server\Server\bin\Debug\Server.exe
+G:\Year 2\Comp 260 - Distributed Systems\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\Server\Server\bin\Debug\Server.pdb

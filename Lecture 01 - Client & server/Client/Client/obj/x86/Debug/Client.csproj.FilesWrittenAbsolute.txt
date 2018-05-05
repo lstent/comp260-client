@@ -1,0 +1,2 @@
+/media/lucy/Seagate Expansion Drive/Year 2/Comp 260 - Distributed Systems/Client-Server Game Task/server & client/comp260-client/Lecture 01 - Client & server/01. c# sockets/Client/Client/obj/x86/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttribute.cs
+/media/lucy/Seagate Expansion Drive/Year 2/Comp 260 - Distributed Systems/Client-Server Game Task/server & client/comp260-client/Lecture 01 - Client & server/01. c# sockets/Client/Client/obj/x86/Debug/Client.exe

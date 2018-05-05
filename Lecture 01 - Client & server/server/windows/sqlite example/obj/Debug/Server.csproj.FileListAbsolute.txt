@@ -1,0 +1,32 @@
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\sqlite example.exe.config
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\sqlite example.exe
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\sqlite example.pdb
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\EntityFramework.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\EntityFramework.SqlServer.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\System.Data.SQLite.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\System.Data.SQLite.EF6.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\System.Data.SQLite.Linq.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\EntityFramework.xml
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\EntityFramework.SqlServer.xml
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\System.Data.SQLite.xml
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\bin\Debug\System.Data.SQLite.dll.config
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\obj\Debug\Server.csprojResolveAssemblyReference.cache
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\obj\Debug\Server.csproj.CoreCompileInputs.cache
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\obj\Debug\sqlite example.exe
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\comp260-client\Lecture 01 - Client & server\01. c# sockets\server\windows\sqlite example\obj\Debug\sqlite example.pdb
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\sqlite example.exe.config
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\sqlite example.exe
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\sqlite example.pdb
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\EntityFramework.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\EntityFramework.SqlServer.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\System.Data.SQLite.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\System.Data.SQLite.EF6.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\System.Data.SQLite.Linq.dll
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\EntityFramework.xml
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\EntityFramework.SqlServer.xml
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\System.Data.SQLite.xml
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\bin\Debug\System.Data.SQLite.dll.config
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\obj\Debug\Server.csprojResolveAssemblyReference.cache
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\obj\Debug\Server.csproj.CoreCompileInputs.cache
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\obj\Debug\sqlite example.exe
+G:\Year 2\Comp 260 - Distributed Systems\Client-Server Game Task\server & client\Lecture 01 - Client & server\server\windows\sqlite example\obj\Debug\sqlite example.pdb
