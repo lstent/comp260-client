@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
+    //returns all the information about rooms and the directions you can go
     public class Room
     {
         public Room(String name, String desc)

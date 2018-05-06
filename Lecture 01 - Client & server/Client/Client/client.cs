@@ -12,10 +12,12 @@ namespace Client
 
     class client
     {
+        //set variables for the client
         static bool firstMessage = true;
         static string loginMessage;
         static LinkedList<String> incommingMessages = new LinkedList<string>();
 
+        //function create a socket to receive messages from the server
         static void ReceiveMessages(Object obj)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -42,6 +44,7 @@ namespace Client
             }
         }
 
+        //function to clear the console messages (to make it less confusing for the player)
         public static void ClearLine()
         {
             Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -49,6 +52,7 @@ namespace Client
             Console.SetCursorPosition(0, Console.CursorTop - 1);
         }
 
+        //function to allow the player to create a username or log in using existing username
         static string username()
         {
             String Msg;
@@ -81,6 +85,7 @@ namespace Client
             return Msg;
         }
 
+        //main loop try to connect to server
         static void Main(string[] args)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -102,15 +107,13 @@ namespace Client
                 }
             }
 
+            //start the login function to send the chosen username or login username
             ASCIIEncoding encoder = new ASCIIEncoding();
             byte[] buffer = new byte[4096];
-
             int ID = 0;
 
             loginMessage = username();
-            
             buffer = encoder.GetBytes(loginMessage);
-
             try
             {
                 int bytesSent = s.Send(buffer);
@@ -120,7 +123,7 @@ namespace Client
                 Console.WriteLine(ex);
             }
             
-
+            // send the messages to navigate through the dungeon
             var myThread = new Thread(ReceiveMessages);
             myThread.Start(s);
 
@@ -129,7 +132,6 @@ namespace Client
                 {
                     String Msg = Console.ReadLine();
                     String lowerMsg = Msg.ToLower() + "  ";
-                    //Console.WriteLine("/n Type help if your stuck");
                     if (lowerMsg.Substring(0, 2) == "go")
                     {
                         Console.Clear();

@@ -28,16 +28,18 @@ namespace Server
 
     class program
     {
+        //set variables for game
         static sqliteConnection conn = null;
         static string name;
         static Dungeon dungeon = new Dungeon();
         static Dictionary<String, Socket> clientDictionary = new Dictionary<String, Socket>();
-        //static int clientID = 1;
+        static int clientID = 1;
         static bool quit = false;
         public static List<Player> PlayerList = new List<Player>();
         static LinkedList<String> incommingMessages = new LinkedList<string>();
         static LinkedList<String> outgoingMessages = new LinkedList<string>();
 
+        //get user ID and socket
         class ReceiveThreadLaunchInfo
         {
             public ReceiveThreadLaunchInfo(int ID, Socket socket)
@@ -51,6 +53,7 @@ namespace Server
             public Socket socket;
         }
 
+        //depending on what the client sent (1 or 2) add a username to databse or retreive a name from the database
         static bool username(string Key, Socket client)
         {
             int bytesSent;
@@ -110,6 +113,7 @@ namespace Server
             return false;
         }
 
+        //accept client sockets and start sending them dungeon information
         static void acceptClientThread(Object obj)
         {
             Socket s = obj as Socket;
@@ -150,6 +154,7 @@ namespace Server
             }
         }
 
+        // get the socket from client ID
         static Socket GetSocketFromName(String name)
         {
             lock (clientDictionary)
@@ -158,6 +163,7 @@ namespace Server
             }
         }
 
+        // get client ID from socket
         static String GetNameFromSocket(Socket s)
         {
             lock (clientDictionary)
@@ -173,6 +179,7 @@ namespace Server
             return null;
         }
 
+        //check if players are in the same room and if so allow them to speak (don't work)
         static void localChatMessage(string message, Player player)
         {
             foreach (Player otherPlayer in PlayerList)
@@ -189,6 +196,7 @@ namespace Server
 
         }
 
+        // if there is a working socket and they've been through the logging on fuction receive messege and decode it
         static void clientReceiveThread(Object obj)
         {
             ReceiveThreadLaunchInfo receiveInfo = obj as ReceiveThreadLaunchInfo;
@@ -225,6 +233,7 @@ namespace Server
             }
         }
 
+        //listen for incoming messages and initate the dungeon map playthrough
         static void Main(string[] args)
         { 
 
@@ -247,7 +256,7 @@ namespace Server
 
 
             sqliteCommand command;
-
+            // open the database
             try
             {
                 conn.Open();
@@ -269,6 +278,7 @@ namespace Server
             var myThread = new Thread(acceptClientThread);
             myThread.Start(serverClient);
 
+            // send messages to the clients
             byte[] buffer = new byte[4096];
             while (true)
             {
@@ -292,10 +302,10 @@ namespace Server
                         string theClient = substrings[0];
                         string dungeonResult = substrings[1];
 
-                        byte[] sendBuffer = encoder.GetBytes(dungeonResult); // this is sending back to client
+                        byte[] sendBuffer = encoder.GetBytes(dungeonResult);
                         int bytesSent = GetSocketFromName(theClient).Send(sendBuffer);
 
-                        bytesSent = GetSocketFromName(theClient).Send(sendBuffer); // DO NOT KNOW WHY I HAVE TO DO THIS TWICE BUT ONLY WAY IT WORKS
+                        bytesSent = GetSocketFromName(theClient).Send(sendBuffer);
                         Console.WriteLine("sending message to " + theClient);
                     }
                     catch
@@ -304,7 +314,7 @@ namespace Server
                     }
                 }
 
-
+                // check messages first come first serve
                 String labelToPrint = "";
                 lock (incommingMessages)
                 {
@@ -316,6 +326,7 @@ namespace Server
                     }
                 }
 
+                //check the messages against the dungeon cases and deal with them accordingly
                 if (labelToPrint != "")
                 {
 

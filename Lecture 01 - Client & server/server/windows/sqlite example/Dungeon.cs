@@ -10,9 +10,9 @@ namespace Server
     public class Dungeon
     {
         public Dictionary<String, Room> roomMap;
-
         Room currentRoom;
 
+        // sets the dungeon map
         public void Init()
         {
             roomMap = new Dictionary<string, Room>();
@@ -56,6 +56,7 @@ namespace Server
             currentRoom = roomMap["Forested Area"];
         }
 
+        //tells the player where the exits in the current room are
         public String GiveInfo(Player player)
         {
             currentRoom = player.currentRoom;
@@ -72,6 +73,7 @@ namespace Server
 
             info += "\nPlayers in room:";
 
+            // finds the players in the same room
             foreach (Player otherPlayer in program.PlayerList)
             {
                 if (player.currentRoom == otherPlayer.currentRoom)
@@ -85,6 +87,7 @@ namespace Server
             return info;
         }
 
+        //checks what words the client has sent and what information specific words should send back to the client
         public string Process(string Key,Player player)
         {
             currentRoom = player.currentRoom;
@@ -93,6 +96,7 @@ namespace Server
 
             switch (input[0].ToLower())
             {
+                //help information
                 case "help":
                     returnString += "\nCommands are ....\n";
                     returnString += "\nhelp - for this screen\n";
@@ -100,14 +104,10 @@ namespace Server
                     returnString += "\ngo [north | south | east | west]  - to travel between locations\n";
                     returnString += "\nsay - local chat\n";
                     returnString += "\nPress any key to continue\n";
-                    //Console.ReadKey(true);
-                    //break;
-
                     return returnString;
 
+                //repeat the exits directions in the room
                 case "look":
-                    //loop straight back
-                    //Console.Clear();
                     Thread.Sleep(1000);
                     returnString += ("\n" + currentRoom.desc);
                     returnString += ("\nExits");
@@ -121,7 +121,7 @@ namespace Server
                     return returnString;
 
 
-
+                //the player can say stuff to other players in the room
                 case "say":
                     returnString += (player.playerName);
                     returnString += ("] ");
@@ -131,7 +131,6 @@ namespace Server
                     }
 
                     Thread.Sleep(1000);
-                    //Console.Clear();
                     returnString += ("\n" + currentRoom.desc);
                     returnString += ("\nExits");
                     for (var i = 0; i < currentRoom.exits.Length; i++)
@@ -143,6 +142,7 @@ namespace Server
                     }
                     return returnString;
 
+                // send the player in a certain location
                 case "go":
                     String direction = "";
 
@@ -183,8 +183,6 @@ namespace Server
                                     returnString += GiveInfo(player);
                                     returnString += ("\nERROR");
                                     returnString += ("\nCan not go " + input[1] + " from here");
-                                    //returnString += ("\nPress any key to continue");
-                                    //Console.ReadKey(true);
                                 }
                             }
                         }
@@ -192,12 +190,11 @@ namespace Server
 
                     return returnString;
 
+                // if the player says something not in the list of cases
                 default:
                     //handle error
                     returnString += ("\nERROR");
                     returnString += ("\nCan not " + Key);
-                    //returnString += ("\nPress any key to continue");
-                    //Console.ReadKey(true);
                     return returnString;
             }
 
